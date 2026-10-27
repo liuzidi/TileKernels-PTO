@@ -1,0 +1,92 @@
+--- 10.vpto
++++ 10.layout.vpto
+@@ -165,16 +165,13 @@
+                 %result_2 = pto.vlds %53[%100] : !pto.ptr<bf16, ub> -> !pto.vreg<128xbf16>
+                 %result_3 = pto.vlds %61[%100] : !pto.ptr<bf16, ub> -> !pto.vreg<128xbf16>
+                 %result_4 = pto.vlds %2[%101] : !pto.ptr<bf16, ub> -> !pto.vreg<128xbf16>
+-                %low, %high = pto.vintlv %82, %result_2 : !pto.vreg<128xbf16>, !pto.vreg<128xbf16> -> !pto.vreg<128xbf16>, !pto.vreg<128xbf16>
+-                %low_5, %high_6 = pto.vintlv %82, %result_3 : !pto.vreg<128xbf16>, !pto.vreg<128xbf16> -> !pto.vreg<128xbf16>, !pto.vreg<128xbf16>
+-                %low_7, %high_8 = pto.vintlv %82, %result_4 : !pto.vreg<128xbf16>, !pto.vreg<128xbf16> -> !pto.vreg<128xbf16>, !pto.vreg<128xbf16>
+-                %102 = pto.vbitcast %low : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
+-                %103 = pto.vbitcast %high : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
+-                %104 = pto.vbitcast %low_5 : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
+-                %105 = pto.vbitcast %high_6 : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
+-                %106 = pto.vbitcast %low_7 : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
++                %102 = pto.vcvt %result_2, %74 {part = "EVEN"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
++                %103 = pto.vcvt %result_2, %74 {part = "ODD"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
++                %104 = pto.vcvt %result_3, %74 {part = "EVEN"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
++                %105 = pto.vcvt %result_3, %74 {part = "ODD"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
++                %106 = pto.vcvt %result_4, %74 {part = "EVEN"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
+                 %107 = pto.vmul %104, %106, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+-                %108 = pto.vbitcast %high_8 : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
++                %108 = pto.vcvt %result_4, %74 {part = "ODD"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
+                 %109 = pto.vmul %105, %108, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+                 %110 = pto.vmul %102, %91, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+                 %111 = pto.vmul %103, %91, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+@@ -201,9 +198,8 @@
+               %92 = arith.addi %91, %c64 : index
+               %result_2 = pto.vlds %13[%91] : !pto.ptr<f32, ub> -> !pto.vreg<64xf32>
+               %result_3 = pto.vlds %13[%92] : !pto.ptr<f32, ub> -> !pto.vreg<64xf32>
+-              %low, %high = pto.vintlv %82, %result : !pto.vreg<128xbf16>, !pto.vreg<128xbf16> -> !pto.vreg<128xbf16>, !pto.vreg<128xbf16>
+-              %93 = pto.vbitcast %low : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
+-              %94 = pto.vbitcast %high : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
++              %93 = pto.vcvt %result, %74 {part = "EVEN"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
++              %94 = pto.vcvt %result, %74 {part = "ODD"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
+               %95:2 = scf.for %arg13 = %c0_i16 to %80 step %c1_i16 iter_args(%arg14 = %result_2, %arg15 = %result_3) -> (!pto.vreg<64xf32>, !pto.vreg<64xf32>)  : i16 {
+                 %96 = arith.index_cast %arg13 : i16 to index
+                 %97 = arith.extsi %arg13 : i16 to i32
+@@ -216,15 +212,13 @@
+                 %result_7 = pto.vlds %61[%100] : !pto.ptr<bf16, ub> -> !pto.vreg<128xbf16>
+                 %101 = arith.addi %100, %c64 : index
+                 %102 = pto.vselr %result_4, %87 : !pto.vreg<64xf32>, !pto.vreg<64xui32> -> !pto.vreg<64xf32>
+-                %low_8, %high_9 = pto.vintlv %82, %result_5 : !pto.vreg<128xbf16>, !pto.vreg<128xbf16> -> !pto.vreg<128xbf16>, !pto.vreg<128xbf16>
+                 %103 = pto.vselr %result_6, %87 : !pto.vreg<64xf32>, !pto.vreg<64xui32> -> !pto.vreg<64xf32>
+-                %low_10, %high_11 = pto.vintlv %82, %result_7 : !pto.vreg<128xbf16>, !pto.vreg<128xbf16> -> !pto.vreg<128xbf16>, !pto.vreg<128xbf16>
+-                %104 = pto.vbitcast %low_8 : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
+-                %105 = pto.vbitcast %high_9 : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
++                %104 = pto.vcvt %result_5, %74 {part = "EVEN"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
++                %105 = pto.vcvt %result_5, %74 {part = "ODD"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
+                 %106 = pto.vmul %104, %102, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+                 %107 = pto.vmul %105, %102, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+-                %108 = pto.vbitcast %low_10 : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
+-                %109 = pto.vbitcast %high_11 : !pto.vreg<128xbf16> -> !pto.vreg<64xf32>
++                %108 = pto.vcvt %result_7, %74 {part = "EVEN"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
++                %109 = pto.vcvt %result_7, %74 {part = "ODD"} : !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<64xf32>
+                 %110 = pto.vmul %108, %93, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+                 %111 = pto.vmul %109, %94, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+                 %112 = pto.vmul %106, %103, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+@@ -236,9 +230,9 @@
+                 %118 = pto.vmul %116, %102, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+                 %119 = pto.vmul %117, %102, %73 : !pto.vreg<64xf32>, !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<64xf32>
+                 %120 = pto.vcvt %118, %73 {part = "EVEN", rnd = "R", sat = "SAT"} : !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<128xbf16>
+-                %121 = pto.vcvt %119, %73 {part = "EVEN", rnd = "R", sat = "SAT"} : !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<128xbf16>
+-                pto.vsts %120, %86[%100], %73 {dist = "PK_B32"} : !pto.vreg<128xbf16>, !pto.ptr<bf16, ub>, !pto.mask<b32>
+-                pto.vsts %121, %86[%101], %73 {dist = "PK_B32"} : !pto.vreg<128xbf16>, !pto.ptr<bf16, ub>, !pto.mask<b32>
++                %121 = pto.vcvt %119, %73 {part = "ODD", rnd = "R", sat = "SAT"} : !pto.vreg<64xf32>, !pto.mask<b32> -> !pto.vreg<128xbf16>
++                %layout_merge = pto.vor %120, %121, %74 : !pto.vreg<128xbf16>, !pto.vreg<128xbf16>, !pto.mask<b16> -> !pto.vreg<128xbf16>
++                pto.vsts %layout_merge, %86[%100], %74 : !pto.vreg<128xbf16>, !pto.ptr<bf16, ub>, !pto.mask<b16>
+                 scf.yield %114, %115 : !pto.vreg<64xf32>, !pto.vreg<64xf32>
+               }
+               pto.vsts %95#0, %13[%91], %73 : !pto.vreg<64xf32>, !pto.ptr<f32, ub>, !pto.mask<b32>
+@@ -266,6 +260,21 @@
+           scf.yield %arg11 : i64
+         }
+         scf.yield %31 : i64
++      }
++      pto.vecscope {
++        %canonical_mask = pto.pset_b32 "PAT_ALL" : !pto.mask<b32>
++        scf.for %canonical_pair = %c0_i16 to %c40_i16 step %c1_i16 : i16 {
++          %canonical_i = arith.index_cast %canonical_pair : i16 to index
++          %canonical_128 = arith.constant 128 : index
++          %canonical_64 = arith.constant 64 : index
++          %canonical_off = arith.muli %canonical_i, %canonical_128 : index
++          %canonical_hi = arith.addi %canonical_off, %canonical_64 : index
++          %canonical_even = pto.vlds %13[%canonical_off] : !pto.ptr<f32, ub> -> !pto.vreg<64xf32>
++          %canonical_odd = pto.vlds %13[%canonical_hi] : !pto.ptr<f32, ub> -> !pto.vreg<64xf32>
++          %canonical_a, %canonical_b = pto.vintlv %canonical_even, %canonical_odd : !pto.vreg<64xf32>, !pto.vreg<64xf32> -> !pto.vreg<64xf32>, !pto.vreg<64xf32>
++          pto.vsts %canonical_a, %13[%canonical_off], %canonical_mask : !pto.vreg<64xf32>, !pto.ptr<f32, ub>, !pto.mask<b32>
++          pto.vsts %canonical_b, %13[%canonical_hi], %canonical_mask : !pto.vreg<64xf32>, !pto.ptr<f32, ub>, !pto.mask<b32>
++        }
+       }
+       pto.set_flag[<PIPE_V>, <PIPE_MTE3>, <EVENT_ID5>]
+       pto.wait_flag[<PIPE_V>, <PIPE_MTE3>, <EVENT_ID5>]

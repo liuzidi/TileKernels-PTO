@@ -1,0 +1,83 @@
+{
+  "baseline": [
+    {
+      "VINTLV.b16": 0,
+      "VINTLV.b32": 0,
+      "VDINTLV.b16": 0,
+      "VCVTFF.bf162f32": 0,
+      "VCVTFF.f322bf16": 0,
+      "VSELR.b32": 0,
+      "VOR": 0,
+      "VST": 1,
+      "VLOOPV2_V310": 1
+    },
+    {
+      "VINTLV.b16": 6,
+      "VINTLV.b32": 0,
+      "VDINTLV.b16": 0,
+      "VCVTFF.bf162f32": 0,
+      "VCVTFF.f322bf16": 2,
+      "VSELR.b32": 2,
+      "VOR": 0,
+      "VST": 5,
+      "VLOOPV2_V310": 4
+    },
+    {
+      "VINTLV.b16": 0,
+      "VINTLV.b32": 0,
+      "VDINTLV.b16": 0,
+      "VCVTFF.bf162f32": 0,
+      "VCVTFF.f322bf16": 2,
+      "VSELR.b32": 0,
+      "VOR": 0,
+      "VST": 0,
+      "VLOOPV2_V310": 2
+    }
+  ],
+  "layout": [
+    {
+      "VINTLV.b16": 0,
+      "VINTLV.b32": 0,
+      "VDINTLV.b16": 0,
+      "VCVTFF.bf162f32": 0,
+      "VCVTFF.f322bf16": 0,
+      "VSELR.b32": 0,
+      "VOR": 0,
+      "VST": 0,
+      "VLOOPV2_V310": 1
+    },
+    {
+      "VINTLV.b16": 0,
+      "VINTLV.b32": 0,
+      "VDINTLV.b16": 0,
+      "VCVTFF.bf162f32": 12,
+      "VCVTFF.f322bf16": 2,
+      "VSELR.b32": 2,
+      "VOR": 1,
+      "VST": 4,
+      "VLOOPV2_V310": 4
+    },
+    {
+      "VINTLV.b16": 0,
+      "VINTLV.b32": 1,
+      "VDINTLV.b16": 0,
+      "VCVTFF.bf162f32": 0,
+      "VCVTFF.f322bf16": 0,
+      "VSELR.b32": 0,
+      "VOR": 0,
+      "VST": 0,
+      "VLOOPV2_V310": 1
+    },
+    {
+      "VINTLV.b16": 0,
+      "VINTLV.b32": 0,
+      "VDINTLV.b16": 0,
+      "VCVTFF.bf162f32": 0,
+      "VCVTFF.f322bf16": 2,
+      "VSELR.b32": 0,
+      "VOR": 0,
+      "VST": 0,
+      "VLOOPV2_V310": 2
+    }
+  ]
+}
